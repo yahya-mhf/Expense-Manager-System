@@ -1,24 +1,37 @@
+# handle input choices. #DONE
+
+# list[list] filter(data: list[list], filter_by: enum, filter_what)
+
+# list[list] group(data: list[list])
+
+# list[list] sort(data: list[list], sort_by: enum)
 from tabulate import tabulate
+# +---------+----------+---------------+---------------------+----------+----------------------------------+
+# |   index | ID       | Categorie     | Date                |   Amount | Description                      |
+# +=========+==========+===============+=====================+==========+==================================+
+# |       0 | 62987EXL | 0             | 2025-08-22 12:46:21 |     0    | 0                                |
+# +---------+----------+---------------+---------------------+----------+----------------------------------+
 
-# TODO :
-# 1. Take safe input from user
-# 2. print dynamic screen
-# 3. return a str table
-# 4. Create expense : insert categorie, amount ...
 
-## 1. Take safe input from user
-# possible input : string, int, float, bool, list, dict, tuple
-def get_choice(valid_numbers = None):
-    try:
-        choice = int(input("Choice : "))
-        if not valid_numbers and choice not in valid_numbers: # Handle choice input
-            raise ValueError
-    except ValueError:
-        print("please enter a valid choice")
-        return
-    else: # break if the choice is valid
-        return choice
+## list[list] filter(data: list[list], filter_by: enum)
 
-## 3. return a str table
-def str_table(table, headers):
-    return tabulate(table, headers, tablefmt="grid") # table:list[list], headers:list
+# default data
+data = [
+    ['ID', 'Categorie', 'Date', 'Amount', 'Description'],
+    ['000-000', 'food', '8-22-2025 12:26', 100, 'this is a food 0 description'],
+    ['000-001', 'travel', '8-22-2025 12:26', 200, 'this is a travel description'],
+    ['000-002', 'education', '8-22-2025 12:26', 300, 'this is an education description'],
+    ['000-003', 'food', '8-22-2025 12:26', 40, 'this is a food 1 description']
+]
+
+# filter(data: list[list], 2, "food")
+def filter(data, filter_by_index, filter_what):
+    filtred_data = []
+    for row in data:
+        if row[filter_by_index] == filter_what:
+            filtred_data.append(row)
+    return filtred_data
+
+filtred_data = filter(data, 1, "food")
+table = tabulate(filtred_data, data[0], tablefmt="grid")
+print(table)
